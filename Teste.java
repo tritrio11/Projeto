@@ -18,7 +18,7 @@ enum OPS{
 	storel, storeg, alloc
 }
 
-
+////AAAAAAAALLLOOOO
 
 class Code{
 	
