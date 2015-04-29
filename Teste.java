@@ -1,10 +1,6 @@
 import java.util.*;
 import java.lang.Object;
 
-
-
-
-
 enum OPS{
 	pushf, pushs, err, check, jump, jz, pusha,
 	add, sub, mul, div, mod, not, inf, infeq, sup, supeq,
@@ -18,15 +14,14 @@ enum OPS{
 	storel, storeg, alloc
 }
 
-////AAAAAAAALLLOOOO
-
 class Code{
 	
-	int operador; //e para doubles/reais? outros operadores?
+	int operador;
 	
 	int opi1;
 	int opi2;
 	String ops;
+	float opf;
 	
 	public Code(int op){
 		this.operador=op;
@@ -48,9 +43,16 @@ class Code{
 		this.ops=new String(s);
 	}
 	
+	public Code(int op, float f){
+		this.operador=op;
+		this.opf=f;
+	}
+	
 	public int getOperador(){
 		return this.operador;
 	}
+	
+	//Falta o <ident>
 }
 
 
@@ -60,49 +62,35 @@ class CallStack{
 	
 	int callS[][]= new int [100][2]; //par de apontadores
 	int i=0;
-	int apc;//para guardar registo pc
-	int afp;//para guardar registo fp
+	int pc;//para guardar registo pc
+	int fp;//para guardar registo fp
 	
 	
 	
-	public void aponta(int pc ){// ,int fp){ //metodo para guardar as chamadas
-		this.apc = pc;
-		callS[i][0]=apc;
+	public void aponta(int p ){// ,int fp){ //metodo para guardar as chamadas
+		this.pc = p;
+		callS[i][0]=pc;
 		System.out.print(callS[i][0]);
 		System.out.println("<-aqui call stack");
 		i++;
-		
 	}
-	
-	
 }
 
 
 
-
-class OpStack{
-
-		int sp=0;
-		int gp=0;
-		int fp;
-}
 
 
 class MyHeap{
 	
-	int operador; //e para doubles/reais? outros operadores?
-	
-	int opi1;
-	int opi2;
-	String ops;
-	
+	int hint;
+	float hreal;
+	//endereco??
 }
 
 
 class MyStrings{
 	
 	String palavra;
-	
 }
 
 
@@ -112,6 +100,11 @@ class Maquina{
 	int pc = 0;
 	Code code[] = new Code[100];
 	CallStack cs =new CallStack();
+	int opStack[]=new int[10000];
+	
+	int sp=0;
+	int gp=0;
+	int fp;//??
 	
 	public void preencheCod() {
 		
@@ -126,13 +119,10 @@ class Maquina{
 		cs.aponta(pc);
 		pc++;
 	}
-
-		
 }
 
 
 class Main{
-	
 	
 	public static void main(String args[]){
 		Maquina mq = new Maquina();
@@ -152,15 +142,6 @@ class Main{
 	
 		if(mq.code[0].getOperador()==OPS.pushi.ordinal()){
 		System.out.println("ok!");}
-		
-	//Waaaaaaaaaaaat??
-	/*
-		System.out.println(cs.callS[0][0]);
-		System.out.println(cs.callS[1][0]);
-		System.out.println(cs.callS[2][0]);
-		*/
 	}
-	
-	
 }
 
